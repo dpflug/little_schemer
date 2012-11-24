@@ -12,8 +12,8 @@
 (define (member? m l)
   (cond
    ((null? l) #f)
-   (or (equal? m (car l))
-       (member? m (cdr l)))))
+   (else (or (equal? m (car l))
+	     (member? m (cdr l))))))
 
 (define (rember a l)
   (cond
@@ -183,7 +183,7 @@
    ((and (number? a1) (number? a2))
     (= a1 a2))
    ((or (number? a1) (number? a2)) #f)
-   (else (equal? a1 a2))))
+   (else (eq? a1 a2))))
 
 (define (occur a lat)
   (cond
@@ -212,9 +212,9 @@
    ((atom? (car l))
     (cond
      ((equal? old (car l))
-      (cons old (cons new (insertR* new old (cdr l))))))
-    (else
-     (cons (car l) (insertR* new old (cdr l)))))
+      (cons old (cons new (insertR* new old (cdr l)))))
+     (else
+      (cons (car l) (insertR* new old (cdr l))))))
    (else
     (cons (insertR* new old (car l))
 	  (insertR* new old (cdr l))))))
