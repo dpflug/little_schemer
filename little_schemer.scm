@@ -299,8 +299,8 @@
 			       (value (2nd-sub-exp nexp))))
    (else (myexpt (value (1st-sub-exp nexp)) (value (2nd-sub-exp nexp))))))
 
-(define (1st-sub-exp aexp) (car (cdr aexp)))
+(define (1st-sub-exp aexp) (car aexp))
 
 (define (2nd-sub-exp aexp) (car (cdr (cdr aexp))))
 
-(define (operator aexp) (car aexp))
+(define (operator aexp) (car (cdr aexp)))
