@@ -310,3 +310,9 @@
 (define (edd1 n) (cons '() n))
 
 (define (zub1 n) (cdr n))
+
+(define (set? lat)
+  (cond
+   ((null? lat) #t)
+   ((member? (car lat) (cdr lat)) #f)
+   (else (set? (cdr lat)))))
