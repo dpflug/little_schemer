@@ -411,4 +411,4 @@
    (else (cons (car (cdr (car l))) (seconds (cdr l))))))
 
 (define (fullfun? fun)
-  (set? (seconds fun)))
+  (fun? (revrel fun)))
