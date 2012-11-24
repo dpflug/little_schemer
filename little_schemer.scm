@@ -280,3 +280,27 @@
     (eqan? s1 s2))
    ((or (atom? s1) (atom? s2)) #f)
    (else (eqlist? s1 s2))))
+
+(define (numbered? aexp)
+  (cond
+   ((atom? aexp) (number? aexp))
+   (else
+    (and (numbered? (car aexp))
+	 (numbered? (car (cdr (cdr aexp))))))))
+
+(define (value nexp)
+  (cond
+   ((atom? nexp) nexp)
+   ((eq? (car (cdr nexp)) '+) (+
+			       (value (car nexp))
+			       (value (car (cdr (cdr nexp))))))
+   ((eq? (car (cdr nexp)) 'x) (*
+			       (value (car nexp))
+			       (value (car (cdr (cdr nexp))))))
+   (else (myexpt (value (car nexp)) (value (car (cdr (cdr nexp))))))))
+
+(define (1st-sub-exp aexp) (car (cdr aexp)))
+
+(define (2nd-sub-exp aexp) (car (cdr (cdr aexp))))
+
+(define (operator aexp) (car aexp))
