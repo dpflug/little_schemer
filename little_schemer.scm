@@ -18,7 +18,7 @@
 (define (rember a l)
   (cond
    ((null? l) '())
-   ((eq? (car l) a) (cdr l))
+   ((equal? (car l) a) (cdr l))
    (else (cons (car l) (rember a (cdr l))))))
 
 (define (firsts l)
