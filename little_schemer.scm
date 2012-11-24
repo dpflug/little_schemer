@@ -257,7 +257,7 @@
    ((null? l) #f)
    ((atom? (car l))
     (or
-     (eq? (car l) a)
+     (equal? (car l) a)
      (member* a (cdr l))))
    (else (or (member* a (car l)) (member* a (cdr l))))))
 
@@ -316,3 +316,11 @@
    ((null? lat) #t)
    ((member? (car lat) (cdr lat)) #f)
    (else (set? (cdr lat)))))
+
+(define (makeset lat)
+  (cond
+   ((null? lat) '())
+   ((member? (car lat) (cdr lat))
+    (makeset (cdr lat)))
+   (else (cons (car lat)
+	       (makeset (cdr lat))))))
