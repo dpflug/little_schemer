@@ -29,27 +29,27 @@
 (define (insertR new old l)
   (cond
    ((null? l) '())
-   ((eq? old (car l)) (cons old (cons new (cdr l))))
+   ((equal? old (car l)) (cons old (cons new (cdr l))))
    (else (cons (car l) (insertR new old (cdr l))))))
 
 (define (insertL new old l)
   (cond
    ((null? l) '())
-   ((eq? old (car l)) (cons new l))
+   ((equal? old (car l)) (cons new l))
    (else (cons (car l) (insertL new old (cdr l))))))
 
 (define (subst new old lat)
   (cond
    ((null? lat) '())
-   ((eq? old (car lat)) (cons new (cdr lat)))
+   ((equal? old (car lat)) (cons new (cdr lat)))
    (else (cons (car lat) (subst new old (cdr lat))))))
 
 (define (subst2 new o1 o2 lat)
   (cond
    ((null? lat) '())
    ((or
-     (eq? o1 (car lat))
-     (eq? o2 (car lat)))
+     (equal? o1 (car lat))
+     (equal? o2 (car lat)))
     (cons new (cdr lat)))
    (else (cons (car lat) (subst2 new o1 o2 (cdr lat))))))
 
@@ -58,7 +58,7 @@
    ((null? lat) '())
    (else
     (cond
-     ((eq? a (car lat)) (multirember a (cdr lat)))
+     ((equal? a (car lat)) (multirember a (cdr lat)))
      (else (cons (car lat) (multirember a (cdr lat))))))))
 
 (define (multiinsertR new old lat)
@@ -66,7 +66,7 @@
    ((null? lat) '())
    (else
     (cond
-     ((eq? old (car lat)) (cons old (cons new (multiinsertR new old (cdr lat)))))
+     ((equal? old (car lat)) (cons old (cons new (multiinsertR new old (cdr lat)))))
      (else (cons (car lat) (multiinsertR new old (cdr lat))))))))
 
 (define (multiinsertL new old lat)
@@ -74,7 +74,7 @@
    ((null? lat) '())
    (else
     (cond
-     ((eq? old (car lat)) (cons new (cons old (multiinsertL new old (cdr lat)))))
+     ((equal? old (car lat)) (cons new (cons old (multiinsertL new old (cdr lat)))))
      (else (cons (car lat) (multiinsertL new old (cdr lat))))))))
 
 (define (multisubst new old lat)
@@ -82,7 +82,7 @@
    ((null? lat) '())
    (else
     (cond
-     ((eq? old (car lat)) (cons new (multisubst new old (cdr lat))))
+     ((equal? old (car lat)) (cons new (multisubst new old (cdr lat))))
      (else (cons (car lat) (multisubst new old (cdr lat))))))))
 
 (define (add1 n)
@@ -92,7 +92,7 @@
   (- n 1))
 
 (define (zero? n)
-  (eq? 0 n))
+  (equal? 0 n))
 
 (define (o+ n m)
   (cond
@@ -183,7 +183,7 @@
    ((and (number? a1) (number? a2))
     (= a1 a2))
    ((or (number? a1) (number? a2)) #f)
-   (else (eq? a1 a2))))
+   (else (equal? a1 a2))))
 
 (define (occur a lat)
   (cond
@@ -192,14 +192,14 @@
    (else (occur a (cdr lat)))))
 
 (define (one? n)
-  (= n 1))
+  (equal? n 1))
 
 (define (rember* a l)
   (cond
    ((null? l) '())
    ((atom? (car l))
     (cond
-     ((eq? (car l) a)
+     ((equal? (car l) a)
       (rember* a (cdr l)))
      (else (cons (car l)
 		 (rember* a (cdr l))))))
@@ -211,7 +211,7 @@
    ((null? l) '())
    ((atom? (car l))
     (cond
-     ((eq? old (car l))
+     ((equal? old (car l))
       (cons old (cons new (insertR* new old (cdr l))))))
     (else
      (cons (car l) (insertR* new old (cdr l)))))
@@ -224,7 +224,7 @@
    ((null? l) 0)
    ((atom? (car l))
     (cond
-     ((eq? (car l) a)
+     ((equal? (car l) a)
       (add1 (occur* a (cdr l))))
      (else (occur* a (cdr l)))))
    (else
@@ -235,7 +235,7 @@
    ((null? l) '())
    ((atom? (car l))
     (cond
-     ((eq? (car l) old)
+     ((equal? (car l) old)
       (cons new (subst* new old (cdr l))))
      (else (cons (car l) (subst* new old (cdr l))))))
    (else (cons (subst* new old (car l))
@@ -246,7 +246,7 @@
    ((null? l) '())
    ((atom? (car l))
     (cond
-     ((eq? (car l) old)
+     ((equal? (car l) old)
       (cons new (cons old (insertL* new old (cdr l)))))
      (else (cons (car l) (insertL* new old (cdr l))))))
    (else (cons (insertL* new old (car l))
@@ -291,10 +291,10 @@
 (define (value nexp)
   (cond
    ((atom? nexp) nexp)
-   ((eq? (operator nexp) '+) (+
+   ((equal? (operator nexp) '+) (+
 			       (value (1st-sub-exp nexp))
 			       (value (2nd-sub-exp nexp))))
-   ((eq? (operator nexp) 'x) (*
+   ((equal? (operator nexp) 'x) (*
 			       (value (1st-sub-exp nexp))
 			       (value (2nd-sub-exp nexp))))
    (else (myexpt (value (1st-sub-exp nexp)) (value (2nd-sub-exp nexp))))))
