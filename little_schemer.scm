@@ -342,3 +342,64 @@
    (else (or
 	  (member? (car set1) set2)
 	  (intersect? (cdr set1) set2)))))
+
+(define (intersect set1 set2)
+  (cond
+   ((null? set1) '())
+   ((member? (car set1) set2)
+    (cons (car set1)
+	  (intersect (cdr set1) set2)))
+   (else (intersect (cdr set1) set2))))
+
+(define (union set1 set2)
+  (cond
+   ((null? set1) set2)
+   ((member? (car set1) set2)
+    (union (cdr set1) set2))
+   (else (cons (car set1)
+	       (union (cdr set1) set2)))))
+
+(define (difference set1 set2)
+  (cond
+   ((null? set1) '())
+   ((member? (car set1) set2)
+    (difference (cdr set1) set2))
+   (else (cons (car set1)
+	       (difference (cdr set1) set2)))))
+
+(define (intersectall l-set)
+  (cond
+   ((null? (cdr l-set)) (car  l-set))
+   (else (intersect (car l-set)
+		    (intersectall (cdr l-set))))))
+
+(define (a-pair? x)
+  (cond
+   ((atom? x) #f)
+   ((null? x) #f)
+   ((null? (cdr x)) #f)
+   ((null? (cdr (cdr x))) #t)
+   (else #f)))
+
+(define (first p)
+  (car p))
+
+(define (second p)
+  (car (cdr p)))
+
+(define (build s1 s2)
+  (cons s1 (cons s2 '())))
+
+(define (third p)
+  (car (cdr (cdr p))))
+
+(define (fun? rel)
+  (set? (firsts rel)))
+
+(define (revrel rel)
+  (cond
+   ((null? rel) '())
+   (else (cons (build
+		(second (car rel))
+		(first (car rel)))
+	       (revrel (cdr rel))))))
