@@ -135,11 +135,11 @@
    ((zero? n) #t)
    (else (< (sub1 n) (sub1 m)))))
 
-(define (= n m)
-  (cond
-   ((> n m) #f)
-   ((< n m) #f)
-   (else #t)))
+;(define (= n m)
+;  (cond
+;   ((> n m) #f)
+;   ((< n m) #f)
+;   (else #t)))
 
 (define (myexpt n m)
   (cond
@@ -328,5 +328,4 @@
 (define (subset? set1 set2)
   (cond
    ((null? set1) #t)
-   ((member? (car set1) set2) (subset? (cdr set1) set2))
-   (else #f)))
+   (else (and (member? (car set1) set2) (subset? (cdr set1) set2)))))
