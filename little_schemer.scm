@@ -304,3 +304,9 @@
 (define (2nd-sub-exp aexp) (car (cdr (cdr aexp))))
 
 (define (operator aexp) (car (cdr aexp)))
+
+(define (sero? n) (null? n))
+
+(define (edd1 n) (cons '() n))
+
+(define (zub1 n) (cdr n))
