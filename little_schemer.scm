@@ -412,3 +412,26 @@
 
 (define (fullfun? fun)
   (fun? (revrel fun)))
+
+(define (rember-f test?)
+  (lambda (a l) 
+    (cond
+     ((null? l) '())
+     ((test? (car l) a) (cdr l))
+     (else (cons (car l) ((rember-f test?) a (cdr l)))))))
+
+(define (insertL-f test?)
+  (lambda (new old l)
+    (cond
+     ((null? l) '())
+     ((test? (car l) old)
+      (cons new (cons old (cdr l))))
+     (else (cons (car l)
+		 ((insertL-f test?) new old (cdr l)))))))
+
+(define (insertR-f test?)
+  (lambda (new old l)
+    (cond
+     ((null? l) '())
+     ((test? old (car l)) (cons old (cons new (cdr l))))
+     (else (cons (car l) ((insertR-f test?) new old (cdr l)))))))
