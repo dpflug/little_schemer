@@ -12,7 +12,7 @@
 (define (member? m l)
   (cond
    ((null? l) #f)
-   (or (eq? m (car l))
+   (or (equal? m (car l))
        (member? m (cdr l)))))
 
 (define (rember a l)
