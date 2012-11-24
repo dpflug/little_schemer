@@ -328,8 +328,17 @@
 (define (subset? set1 set2)
   (cond
    ((null? set1) #t)
-   (else (and (member? (car set1) set2) (subset? (cdr set1) set2)))))
+   (else (and
+	  (member? (car set1) set2)
+	  (subset? (cdr set1) set2)))))
 
 (define (eqset? set1 set2)
   (and (subset? set1 set2)
        (subset? set2 set1)))
+
+(define (intersect? set1 set2)
+  (cond
+   ((null? set1) #f)
+   (else (or
+	  (member? (car set1) set2)
+	  (intersect? (cdr set1) set2)))))
