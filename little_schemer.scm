@@ -320,7 +320,7 @@
 (define (makeset lat)
   (cond
    ((null? lat) '())
-   ((member? (car lat) (cdr lat))
-    (makeset (cdr lat)))
    (else (cons (car lat)
-	       (makeset (cdr lat))))))
+	       (makeset
+		(multirember (car lat)
+			     (cdr lat)))))))
