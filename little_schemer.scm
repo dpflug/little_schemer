@@ -96,8 +96,8 @@
 
 (define (o+ n m)
   (cond
-   ((zero? m) n)
-   (else (add1 (o+ n (sub1 m))))))
+   ((sero? m) n)
+   (else (edd1 (o+ n (zub1 m))))))
 
 (define (o- n m)
   (cond 
