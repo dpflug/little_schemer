@@ -12,6 +12,7 @@ config.py
 
 # Editor excess
 *~
+\#*#
 
 # vim vestiges
 *.swp
