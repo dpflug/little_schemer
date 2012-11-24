@@ -291,13 +291,13 @@
 (define (value nexp)
   (cond
    ((atom? nexp) nexp)
-   ((eq? (car (cdr nexp)) '+) (+
-			       (value (car nexp))
-			       (value (car (cdr (cdr nexp))))))
-   ((eq? (car (cdr nexp)) 'x) (*
-			       (value (car nexp))
-			       (value (car (cdr (cdr nexp))))))
-   (else (myexpt (value (car nexp)) (value (car (cdr (cdr nexp))))))))
+   ((eq? (operator nexp) '+) (+
+			       (value (1st-sub-exp nexp))
+			       (value (2nd-sub-exp nexp))))
+   ((eq? (operator nexp) 'x) (*
+			       (value (1st-sub-exp nexp))
+			       (value (2nd-sub-exp nexp))))
+   (else (myexpt (value (1st-sub-exp nexp)) (value (2nd-sub-exp nexp))))))
 
 (define (1st-sub-exp aexp) (car (cdr aexp)))
 
