@@ -414,7 +414,7 @@
   (fun? (revrel fun)))
 
 (define (rember-f test?)
-  (lambda (a l) 
+  (lambda (a l)
     (cond
      ((null? l) '())
      ((test? (car l) a) (cdr l))
@@ -435,3 +435,57 @@
      ((null? l) '())
      ((test? old (car l)) (cons old (cons new (cdr l))))
      (else (cons (car l) ((insertR-f test?) new old (cdr l)))))))
+
+(define (seqL new old l)
+  (cons new (cons old l)))
+
+(define (seqR new old l)
+  (cons old (cons new l)))
+
+(define (insert-g seq)
+  (lambda (new old l)
+    (cond
+     ((null? l) '())
+     ((eq? (car l) old)
+      (seq new old (cdr l)))
+     (else (cons (car l)
+                 ((insert-g seq) new old (cdr l)))))))
+
+(define (insertL) (insert-g seqL))
+
+(define (insertR) (insert-g seqR))
+
+(define (insertL)
+  (insert-g (lambda (new old l)
+              (cons new (cons old l)))))
+
+(define (seqS new old l)
+  (cons new l))
+
+(define (subst) (insert-g seqS))
+
+(define (atom-to-function x)
+  (cond
+   ((eq? x (quote +) +)
+    (eq? x (quote *) *)
+    (else myexpt))))
+
+(define (value nexp)
+  (cond
+   ((atom? nexp) nexp)
+   (else ((atom-to-function (operator nexp))
+          (value (1st-sub-exp nexp))
+          (value (2nd-sub-exp nexp))))))
+
+(define (multirember-f test?)
+  (lambda (a lat)
+    (cond
+     ((null? lat) '())
+     ((test? a (car lat)) ((multirember-f test?) a (cdr lat)))
+     (else (cons (car lat) ((multirember-f test?) a (cdr lat)))))))
+
+(define (multiremberT test? lat)
+  (cond
+   ((null? lat) '())
+   ((test? (car lat)) (multiremberT test? (cdr lat)))
+   (else (cons (car lat) (multiremberT test? (cdr lat))))))
